@@ -24,13 +24,11 @@ class Characteristics(BaseModel):
     max_speed: float
     max_fuel_capacity: float
 
-# get /cars: recup la liste d'objet sauuvegardée en memoire precedemment
-@app.get("/cars", response_model=List[Car])
+A@app.get("/cars", response_model=List[Car])
 def get_cars():
     return cars
 
-# get /cars/{id} : permet d'obtenir un phone particulier u {id} est l'identifiant de la voiture
-# dans le cas ou l'identifiant fourni n'est pas trouvé dans la liste sauvegardée en memoire vive, alors il faut retourner une reponse avec un code status 404 ainisi qu'un message d''erreur indiquant que le phone comportant l'id fourni n'existe pas ou pas trouvée
+ 
 @app.get("/cars/{id}", response_model=Car)
 def get_car(id: str):
     car = next((car for car in cars if car.id == id), None)
@@ -38,5 +36,13 @@ def get_car(id: str):
         return car
     return {"error": "Car not found"}, 404
 
-# uvicorn main:app --reload
+
+@app.put("/cars/{id}/characteristics", response_model=Car)
+def update_car_characteristics(id: str, characteristics: Characteristics):
+    car = next((car for car in cars if car.id == id), None)
+    if car is not None:
+        car.characteristics = characteristics
+        return car
+    return {"error": "Car not found"}, 404
+
 
