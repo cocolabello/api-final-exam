@@ -24,7 +24,7 @@ class Characteristics(BaseModel):
     max_speed: float
     max_fuel_capacity: float
 
-A@app.get("/cars", response_model=List[Car])
+@app.get("/cars", response_model=List[Car])
 def get_cars():
     return cars
 

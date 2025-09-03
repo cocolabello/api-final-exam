@@ -9,8 +9,6 @@ servers:
     description: Serveur local
 
 
-
-
 paths:
   /ping:
     get:
